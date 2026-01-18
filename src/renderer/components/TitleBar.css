@@ -1,0 +1,52 @@
+.titlebar {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0;
+  -webkit-app-region: drag;
+}
+
+.titlebar-drag {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  -webkit-app-region: drag;
+}
+
+.window-buttons {
+  display: flex;
+  -webkit-app-region: no-drag;
+}
+
+.window-btn {
+  width: 36px;
+  height: 28px;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.window-btn svg {
+  width: 9px;
+  height: 9px;
+}
+
+.window-btn:hover { 
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.window-btn.close:hover { 
+  background: #e81123;
+  color: #fff;
+}
+
+.window-btn.minimize { }
+.window-btn.maximize { }

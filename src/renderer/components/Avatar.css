@@ -1,0 +1,98 @@
+.avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-3);
+  flex-shrink: 0;
+}
+
+.avatar-small {
+  width: 24px;
+  height: 24px;
+  font-size: 10px;
+}
+
+.avatar-medium {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.avatar-large {
+  width: 80px;
+  height: 80px;
+  font-size: 32px;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* For small avatars, use cover but ensure consistent display */
+.avatar-small .avatar-img {
+  object-fit: cover;
+}
+
+.avatar-img.loaded {
+  opacity: 1;
+}
+
+.avatar-initials {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+  font-weight: 600;
+  user-select: none;
+}
+
+.avatar-skeleton {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--bg-3) 25%, var(--bg-2) 50%, var(--bg-3) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.avatar-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  border: 2px solid var(--bg-1);
+}
+
+.avatar-status-online {
+  background: #43b581;
+}
+
+.avatar-status-idle {
+  background: #faa61a;
+}
+
+.avatar-status-offline {
+  background: #747f8d;
+}

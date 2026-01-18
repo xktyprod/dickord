@@ -1,0 +1,586 @@
+.channel-sidebar {
+  width: 260px;
+  padding-right: 30px;
+  background: var(--bg-1);
+  backdrop-filter: blur(40px);
+  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.server-header {
+  height: 50px;
+  padding: 0 12px 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.header-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.header-btn:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.header-btn.delete:hover {
+  background: rgba(252, 129, 129, 0.2);
+  color: var(--red);
+}
+
+.add-channel-wrapper {
+  position: relative;
+}
+
+.channel-list {
+  flex: 1;
+  padding: 6px 10px;
+  overflow-y: auto;
+}
+
+.channel {
+  display: flex;
+  align-items: center;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+}
+
+.channel:hover { background: var(--hover); color: var(--text); }
+.channel.active { background: var(--selected); color: var(--text); }
+
+.channel .icon { 
+  margin-right: 10px; 
+  font-size: 16px;
+  opacity: 0.6;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.channel:hover .icon, .channel.active .icon { opacity: 1; }
+
+.channel .channel-name {
+  flex: 1;
+}
+
+.delete-channel-btn {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  opacity: 0;
+}
+
+.channel:hover .delete-channel-btn {
+  opacity: 1;
+}
+
+.delete-channel-btn:hover {
+  background: rgba(252, 129, 129, 0.2);
+  color: var(--red);
+}
+
+.user-panel {
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 0 0 0 var(--radius-xl);
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  position: relative;
+}
+
+.user-avatar .status {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 2px solid var(--bg-1);
+}
+
+.user-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info { flex: 1; }
+.user-info .name { display: block; font-size: 13px; font-weight: 600; }
+.user-info .status-text { display: block; font-size: 11px; color: var(--text-muted); }
+
+.settings-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: var(--bg-2);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.settings-btn:hover { background: var(--hover); color: var(--text); }
+
+
+.channel.voice.voice-active {
+  color: var(--green);
+}
+
+.channel.voice.voice-active .icon {
+  opacity: 1;
+  color: var(--green);
+}
+
+.voice-users {
+  padding: 4px 0 4px 8px;
+}
+
+.voice-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+
+.voice-user:hover {
+  background: var(--hover);
+}
+
+.voice-user.speaking {
+  color: var(--text);
+}
+
+/* Avatar size is controlled by Avatar component with size="small" */
+
+.voice-user.speaking .avatar {
+  box-shadow: 0 0 0 2px var(--green);
+}
+
+.user-muted-icon {
+  color: var(--red);
+  margin-left: auto;
+}
+
+.voice-status-icon {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.voice-status-icon.muted {
+  color: var(--red);
+}
+
+.voice-status-icon.deafened {
+  color: var(--red);
+}
+
+.voice-connected-bar {
+  margin: 0 10px 8px 10px;
+  padding: 12px;
+  background: rgba(72, 187, 120, 0.15);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.voice-connected-bar .voice-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.voice-connected-bar .voice-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.voice-connected-bar .voice-icon.network-good {
+  background: var(--green);
+}
+
+.voice-connected-bar .voice-icon.network-medium {
+  background: var(--orange);
+}
+
+.voice-connected-bar .voice-icon.network-poor {
+  background: var(--red);
+}
+
+.voice-connected-bar .voice-icon.network-offline {
+  background: var(--text-muted);
+}
+
+.voice-connected-bar .voice-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.voice-connected-bar .voice-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.voice-connected-bar .voice-channel-name {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.voice-connected-bar .voice-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.voice-connected-bar .voice-btn {
+  flex: 1;
+  height: 32px;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-dim);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.voice-connected-bar .voice-btn:hover {
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text);
+}
+
+.voice-connected-bar .voice-btn.muted {
+  color: var(--red);
+}
+
+.voice-connected-bar .voice-btn.muted:hover {
+  background: rgba(252, 129, 129, 0.2);
+}
+
+.voice-connected-bar .voice-btn.active {
+  color: var(--green);
+}
+
+.voice-connected-bar .voice-btn.active:hover {
+  background: rgba(72, 187, 120, 0.2);
+}
+
+.voice-connected-bar .disconnect-btn {
+  flex: 1;
+  height: 32px;
+  border: none;
+  background: rgba(252, 129, 129, 0.2);
+  color: var(--red);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.voice-connected-bar .disconnect-btn:hover {
+  background: rgba(252, 129, 129, 0.35);
+}
+
+.channel-menu {
+  position: fixed;
+  background: var(--bg-1);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  z-index: 9999;
+  min-width: 180px;
+  white-space: nowrap;
+}
+
+.add-channel-wrapper {
+  position: relative;
+}
+
+.channel-menu button {
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s;
+}
+
+.channel-menu button:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.channel-menu button span {
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+
+/* Quality indicator - now positioned before avatar */
+.quality-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.voice-user-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+/* Watch stream button */
+.watch-stream-btn {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: var(--bg-3);
+  color: var(--text-dim);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  padding: 0;
+}
+
+.watch-stream-btn:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.watch-stream-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+
+/* Connecting state */
+.voice-connected-bar.connecting {
+  background: rgba(251, 191, 36, 0.15);
+}
+
+.voice-connected-bar .voice-icon.connecting {
+  background: var(--orange, #f59e0b);
+  animation: pulse-connecting 1.5s ease-in-out infinite;
+}
+
+.voice-connected-bar .voice-status.connecting {
+  color: var(--orange, #f59e0b);
+}
+
+@keyframes pulse-connecting {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+}
+
+.connecting-icon {
+  animation: spin-connecting 1.5s linear infinite;
+}
+
+@keyframes spin-connecting {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Channel context menu */
+.channel-context-menu {
+  position: fixed;
+  background: var(--bg-1);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  z-index: 9999;
+  min-width: 160px;
+}
+
+.channel-context-menu button {
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.15s;
+}
+
+.channel-context-menu button:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.channel-context-menu button.delete:hover {
+  background: rgba(252, 129, 129, 0.2);
+  color: var(--red);
+}
+
+/* Rename modal */
+.rename-modal {
+  background: var(--bg-1);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  min-width: 320px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.rename-modal h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.rename-modal input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--bg-3);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.rename-modal input:focus {
+  border-color: var(--accent);
+}
+
+.rename-modal .modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.rename-modal .modal-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.rename-modal .modal-buttons button:first-child {
+  background: transparent;
+  color: var(--text-dim);
+}
+
+.rename-modal .modal-buttons button:first-child:hover {
+  color: var(--text);
+}
+
+.rename-modal .modal-buttons button.primary {
+  background: var(--accent);
+  color: white;
+}
+
+.rename-modal .modal-buttons button.primary:hover {
+  opacity: 0.9;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}

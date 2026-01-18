@@ -1,0 +1,568 @@
+.dm-call-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+
+.dm-call-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-1);
+  position: relative;
+}
+
+.dm-call-back-btn {
+  position: absolute;
+  left: 20px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.dm-call-back-btn:hover {
+  background: var(--bg-3);
+}
+
+.dm-call-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dm-call-title svg {
+  color: var(--text-muted);
+}
+
+.dm-call-chat-btn {
+  position: absolute;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dm-call-chat-btn:hover {
+  background: var(--bg-3);
+}
+
+.dm-call-chat-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+.dm-chat-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: #f04747;
+  color: white;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-1);
+}
+
+/* Панель чата */
+.dm-call-chat-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100%;
+  background: var(--bg-1);
+  border-left: 1px solid var(--border);
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.dm-call-chat-panel.open {
+  display: flex;
+}
+
+.dm-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dm-chat-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dm-chat-close:hover {
+  background: var(--bg-3);
+  color: var(--text-primary);
+}
+
+.dm-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.dm-chat-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.dm-chat-message {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dm-chat-message.me {
+  flex-direction: row-reverse;
+}
+
+.dm-chat-msg-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.dm-chat-msg-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dm-chat-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.dm-chat-msg-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.dm-chat-message.me .dm-chat-msg-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.dm-chat-msg-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.dm-chat-message.me .dm-chat-msg-header {
+  flex-direction: row-reverse;
+}
+
+.dm-chat-msg-author {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dm-chat-msg-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.dm-chat-msg-text {
+  padding: 8px 12px;
+  background: var(--bg-3);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+.dm-chat-message.me .dm-chat-msg-text {
+  background: var(--accent);
+  color: white;
+  border-radius: 12px 12px 0 12px;
+}
+
+.dm-chat-message:not(.me) .dm-chat-msg-text {
+  border-radius: 12px 12px 12px 0;
+}
+
+.dm-chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.dm-chat-input input {
+  flex: 1;
+  padding: 10px 12px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.dm-chat-input input:focus {
+  border-color: var(--accent);
+}
+
+.dm-chat-input input::placeholder {
+  color: var(--text-muted);
+}
+
+.dm-chat-send {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.dm-chat-send:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.dm-chat-send:active {
+  transform: scale(0.95);
+}
+
+/* Контент звонка */
+.dm-call-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Сетка пользователей */
+.dm-call-users {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 24px;
+  padding: 24px;
+  width: 100%;
+  max-width: 1200px;
+  align-content: center;
+}
+
+.dm-call-user-tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  background: var(--bg-3);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 3px solid transparent;
+  transition: border-color 0.2s;
+}
+
+/* Адаптивная сетка */
+@media (max-width: 900px) {
+  .dm-call-users {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .dm-call-users {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .dm-call-user-tile {
+    width: calc(100% - 40px);
+    max-width: 400px;
+    height: 200px;
+    min-height: 200px;
+  }
+}
+
+/* Плитка пользователя */
+.dm-call-user-tile.speaking {
+  border-color: #43b581;
+  box-shadow: 0 0 12px rgba(67, 181, 129, 0.4);
+  animation: pulse-speaking 1.5s ease-in-out infinite;
+}
+
+.dm-call-user-tile.has-screen-share {
+  cursor: pointer;
+}
+
+.dm-call-user-tile.has-screen-share:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s;
+}
+
+/* Аватар пользователя */
+.dm-call-user-avatar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--bg-3) 0%, var(--bg-2) 100%);
+}
+
+.dm-call-user-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dm-call-avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+}
+
+/* Видео демонстрации экрана в плитке */
+.dm-call-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Кнопка полноэкранного просмотра в плитке */
+.tile-fullscreen-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.dm-call-user-tile:hover .tile-fullscreen-btn {
+  opacity: 1;
+}
+
+.tile-fullscreen-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+/* Информация о пользователе */
+.dm-call-user-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dm-call-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.dm-call-user-status {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.status-icon {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.status-icon.muted {
+  color: #f04747;
+}
+
+.status-icon.deafened {
+  color: #f04747;
+}
+
+.status-icon.screen-share {
+  color: #43b581;
+}
+
+/* Панель управления */
+.dm-call-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-1);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.dm-call-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dm-call-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1px;
+}
+
+.dm-call-control-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-3);
+  border: none;
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dm-call-control-btn:hover {
+  background: var(--bg-4);
+}
+
+.dm-call-control-btn.active {
+  background: #f04747;
+  color: white;
+}
+
+.dm-call-control-btn.active:hover {
+  background: #d84040;
+}
+
+.dm-call-control-btn.end-call {
+  background: #f04747;
+  color: white;
+}
+
+.dm-call-control-btn.end-call:hover {
+  background: #d84040;
+}
+
+/* Анимации */
+@keyframes pulse-speaking {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(67, 181, 129, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(67, 181, 129, 0.6);
+  }
+}

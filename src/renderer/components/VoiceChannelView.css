@@ -1,0 +1,275 @@
+.voice-channel-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-2);
+}
+
+.voice-channel-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-1);
+}
+
+.voice-channel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.voice-channel-title svg {
+  color: var(--text-muted);
+}
+
+/* Сетка пользователей */
+.voice-users-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 24px;
+  padding: 24px;
+  overflow-y: auto;
+  align-content: stretch;
+}
+
+.voice-user-tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-3);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 3px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.voice-user-tile.has-screen-share {
+  cursor: pointer;
+}
+
+.voice-user-tile.has-screen-share:hover {
+  border-color: rgba(67, 181, 129, 0.5);
+}
+
+/* Адаптивная сетка */
+@media (max-width: 900px) {
+  .voice-users-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .voice-users-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .voice-user-tile {
+    width: calc(100% - 40px);
+    max-width: 400px;
+    height: 200px;
+  }
+}
+
+/* Плитка пользователя */
+.voice-user-tile.speaking {
+  border-color: #43b581;
+  box-shadow: 0 0 12px rgba(67, 181, 129, 0.4);
+}
+
+/* Видео демонстрации */
+.voice-user-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Аватар пользователя */
+.voice-user-avatar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--bg-3) 0%, var(--bg-2) 100%);
+}
+
+.voice-user-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.voice-user-avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+}
+
+/* Информация о пользователе */
+.voice-user-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.voice-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.voice-user-status {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.status-icon {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.status-icon.muted {
+  color: #f04747;
+}
+
+.status-icon.deafened {
+  color: #f04747;
+}
+
+.status-icon.screen-share {
+  color: #43b581;
+}
+
+/* Кнопка полноэкранного просмотра в плитке */
+.tile-fullscreen-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.voice-user-tile:hover .tile-fullscreen-btn {
+  opacity: 1;
+}
+
+.tile-fullscreen-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+/* Панель управления */
+.voice-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-1);
+  border-top: 1px solid var(--border);
+}
+
+.voice-controls-left {
+  display: flex;
+  gap: 8px;
+}
+
+.voice-controls-divider {
+  width: 2px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1px;
+}
+
+.voice-control-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-3);
+  border: none;
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.voice-control-btn:hover {
+  background: var(--bg-4);
+}
+
+.voice-control-btn.active {
+  background: #f04747;
+  color: white;
+}
+
+.voice-control-btn.active:hover {
+  background: #d84040;
+}
+
+.voice-control-btn.disconnect {
+  background: #f04747;
+  color: white;
+}
+
+.voice-control-btn.disconnect:hover {
+  background: #d84040;
+}
+
+/* Анимации */
+@keyframes pulse-speaking {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(67, 181, 129, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(67, 181, 129, 0.6);
+  }
+}
+
+.voice-user-tile.speaking {
+  animation: pulse-speaking 1.5s ease-in-out infinite;
+}

@@ -1,0 +1,61 @@
+{
+  "name": "discord-clone",
+  "version": "1.0.0",
+  "description": "Discord desktop client clone",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently \"npm run dev:renderer\" \"wait-on http://127.0.0.1:3000 && electron .\"",
+    "dev:renderer": "vite",
+    "build": "vite build && electron-builder",
+    "pack": "electron-builder --dir",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "build": {
+    "appId": "com.dickord.app",
+    "productName": "Dickord",
+    "directories": {
+      "output": "dist-build"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico",
+      "sign": null
+    },
+    "files": [
+      "src/main/**/*",
+      "dist-renderer/**/*"
+    ],
+    "asarUnpack": [
+      "src/main/preload.js"
+    ]
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0",
+    "firebase": "^12.7.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.28.6",
+    "@babel/preset-react": "^7.28.5",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "babel-jest": "^30.2.0",
+    "concurrently": "^8.2.2",
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
+    "fast-check": "^4.5.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1",
+    "vite": "^5.0.10",
+    "wait-on": "^7.2.0"
+  }
+}

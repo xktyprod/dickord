@@ -1,0 +1,192 @@
+.server-list {
+  width: 70px;
+  background: var(--bg-1);
+  backdrop-filter: blur(40px);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 0;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.server-fixed {
+  flex-shrink: 0;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.server-fixed.bottom {
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+
+.server-wheel {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  overflow: hidden;
+  cursor: ns-resize;
+  position: relative;
+}
+
+/* Gradient fade overlays - DISABLED */
+.wheel-fade {
+  display: none;
+}
+
+.wheel-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 0;
+  background: #fff;
+  border-radius: 0 3px 3px 0;
+  transition: height 0.25s;
+}
+
+.wheel-item:hover .pill { height: 20px; }
+.pill.active { height: 36px; }
+
+.server {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.3s ease,
+              border-radius 0.2s, 
+              background 0.2s;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.server:hover { border-radius: var(--radius-md); background: var(--hover); }
+.server.active { background: var(--accent); }
+.server.center-server { border-radius: var(--radius-md); }
+.server.add { color: var(--green); font-size: 22px; font-weight: 300; }
+.server.add:hover { background: var(--green); color: #fff; }
+
+.server.friends { color: var(--text); cursor: pointer; }
+.server.friends:hover { background: var(--accent); color: #fff; }
+.server.friends.active { background: var(--accent); color: #fff; }
+
+
+/* DM Contacts in wheel */
+.server.contact-item {
+  background: var(--bg-3);
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+}
+
+.wheel-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+/* Unread badge on Friends button */
+.unread-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: var(--red);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid var(--bg-1);
+}
+
+/* Unread dot on contact avatars */
+.contact-unread-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background: var(--red);
+  border-radius: 50%;
+  border: 2px solid var(--bg-1);
+}
+
+.server.friends {
+  position: relative;
+}
+
+/* Tooltips */
+.server-tooltip {
+  display: flex;
+  align-items: center;
+  animation: tooltipFadeIn 0.15s ease-out;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.server-tooltip-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 6px 6px 0;
+  border-color: transparent #18181b transparent transparent;
+}
+
+.server-tooltip-content {
+  background: #18181b;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Light theme tooltip */
+[data-theme="light"] .server-tooltip-arrow {
+  border-color: transparent #ffffff transparent transparent;
+}
+
+[data-theme="light"] .server-tooltip-content {
+  background: #ffffff;
+  color: #18181b;
+}

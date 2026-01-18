@@ -1,0 +1,10 @@
+.speaking-indicator-wrapper {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.speaking-indicator-wrapper.is-speaking {
+  outline: 2px solid #43b581;
+  outline-offset: 2px;
+}
