@@ -85,6 +85,40 @@ const state = {
   appSettings: null
 };
 
+// Debug helper - expose to window for troubleshooting
+if (typeof window !== 'undefined') {
+  window.webrtcDebug = {
+    getState: () => state,
+    getPeers: () => Array.from(state.peers.entries()).map(([id, peer]) => ({
+      id,
+      userName: peer.userName,
+      connectionState: peer.pc?.connectionState,
+      iceConnectionState: peer.pc?.iceConnectionState,
+      signalingState: peer.pc?.signalingState
+    })),
+    getLocalStream: () => state.localStream,
+    checkMicrophone: async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+        console.log('✅ Микрофон доступен');
+        console.log('Треки:', stream.getTracks().map(t => ({
+          kind: t.kind,
+          enabled: t.enabled,
+          muted: t.muted,
+          readyState: t.readyState
+        })));
+        stream.getTracks().forEach(t => t.stop());
+        return true;
+      } catch (err) {
+        console.error('❌ Ошибка микрофона:', err.message);
+        return false;
+      }
+    },
+    getAudioContext: () => state.audioContext?.state
+  };
+  console.log('WebRTC Debug доступен: window.webrtcDebug');
+}
+
 // Per-peer connection state
 class PeerState {
   constructor(oderId, userName) {
@@ -802,7 +836,7 @@ const startVolumeMonitoring = () => {
       volumes.push({
         oderId: state.myUserId,
         name: state.myUserName,
-        level: normalizedLevel // Send adjusted level for UI
+        level: state.noiseGateOpen ? normalizedLevel : 0 // Show 0 when gate is closed
       });
     }
     

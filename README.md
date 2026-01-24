@@ -100,6 +100,13 @@ service cloud.firestore {
         ".read": true,
         ".write": "$uid === auth.uid"
       }
+    },
+    "notifications": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": true,
+        ".indexOn": ["timestamp"]
+      }
     }
   }
 }

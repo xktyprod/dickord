@@ -26,10 +26,17 @@
     },
     "files": [
       "src/main/**/*",
-      "dist-renderer/**/*"
+      "dist-renderer/**/*",
+      "assets/**/*"
     ],
     "asarUnpack": [
       "src/main/preload.js"
+    ],
+    "extraResources": [
+      {
+        "from": "assets",
+        "to": "assets"
+      }
     ]
   },
   "dependencies": {

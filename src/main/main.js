@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, desktopCapturer } = require('electron');
+const { app, BrowserWindow, ipcMain, desktopCapturer, Tray, Menu, nativeImage } = require('electron');
 const path = require('path');
 
 const isDev = !app.isPackaged;
@@ -8,6 +8,7 @@ app.commandLine.appendSwitch('disable-gpu-shader-disk-cache');
 app.commandLine.appendSwitch('disable-software-rasterizer');
 
 let mainWindow = null;
+let tray = null;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -21,8 +22,21 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
-      // Enable audio device selection
-      enableBlinkFeatures: 'AudioOutputDevices'
+      // Enable audio device selection and media permissions
+      enableBlinkFeatures: 'AudioOutputDevices',
+      // CRITICAL: Allow media access in production
+      webSecurity: true,
+      allowRunningInsecureContent: false
+    }
+  });
+
+  // CRITICAL: Handle media permissions
+  mainWindow.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
+    const allowedPermissions = ['media', 'microphone', 'camera', 'audioCapture', 'videoCapture'];
+    if (allowedPermissions.includes(permission)) {
+      callback(true); // Grant permission
+    } else {
+      callback(false);
     }
   });
 
@@ -43,6 +57,65 @@ function createWindow() {
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.webContents.setZoomFactor(1.1);
   });
+
+  // Handle window close - minimize to tray instead of closing
+  mainWindow.on('close', (event) => {
+    if (!app.isQuitting) {
+      event.preventDefault();
+      mainWindow.hide();
+      return false;
+    }
+  });
+}
+
+// Create system tray icon
+function createTray() {
+  // Use icon from assets folder
+  const iconPath = isDev 
+    ? path.join(__dirname, '../../assets/icon.ico')
+    : path.join(process.resourcesPath, 'assets/icon.ico');
+  
+  // Create tray icon
+  const icon = nativeImage.createFromPath(iconPath);
+  tray = new Tray(icon.resize({ width: 16, height: 16 }));
+  
+  // Create context menu
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Открыть Dickord',
+      click: () => {
+        if (mainWindow) {
+          mainWindow.show();
+          mainWindow.focus();
+        }
+      }
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Выход',
+      click: () => {
+        app.isQuitting = true;
+        app.quit();
+      }
+    }
+  ]);
+  
+  tray.setToolTip('Dickord');
+  tray.setContextMenu(contextMenu);
+  
+  // Click on tray icon to show/hide window
+  tray.on('click', () => {
+    if (mainWindow) {
+      if (mainWindow.isVisible()) {
+        mainWindow.hide();
+      } else {
+        mainWindow.show();
+        mainWindow.focus();
+      }
+    }
+  });
 }
 
 // IPC handlers
@@ -58,10 +131,8 @@ ipcMain.on('window-maximize', () => {
 
 ipcMain.on('window-close', () => {
   if (mainWindow) {
-    // Send cleanup signal before closing
-    mainWindow.webContents.send('app-closing');
-    // Give time for cleanup then close
-    setTimeout(() => mainWindow.close(), 500);
+    // Hide to tray instead of closing
+    mainWindow.hide();
   }
 });
 
@@ -84,12 +155,27 @@ ipcMain.handle('get-sources', async () => {
   }));
 });
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
+  createTray();
+});
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  // Don't quit on window close - keep running in tray
+  // Only quit on macOS when explicitly requested
+  if (process.platform === 'darwin' && !app.isQuitting) {
+    return;
+  }
 });
 
 app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  } else if (mainWindow) {
+    mainWindow.show();
+  }
+});
+
+app.on('before-quit', () => {
+  app.isQuitting = true;
 });
